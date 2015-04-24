@@ -9,8 +9,8 @@
   <meta name="author" content="Aiyanxu">
 
   
-  <meta name="description" content="Given an array of integers,every element appears twice except for one.Find that single one Note:
-Your algorithm should have a linear runtime &hellip;">
+  <meta name="description" content="Write a SQL query to get the second highest salary from the Employee table.
+If there is no second highest salary,then the query should return null &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,145 @@ Your algorithm should have a linear runtime &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/second-highest-salary/">Second Highest Salary</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T15:00:09+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:00 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Write a SQL query to get the second highest salary from the Employee table.<br/>
+If there is no second highest salary,then the query should return <code>null</code></p>
+
+<p>需要查询第二高的薪水，对于有位置要求的查询，我首先想到了<code>LIMIT</code>关键字，题目同时要求去重，需要使用<code>DISTINCT</code>关键字</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='SQL'><span class='line'><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">Salary</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Salary</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面语句的问题是当结果为空时，返回的是<code>[]</code>,而不是<code>null</code>,解决办法是嵌套SELECT语句</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='SQL'><span class='line'><span class="k">SELECT</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">Salary</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Salary</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于顺序问题的查询，我们也倾向于使用MAX，MIN这些统计函数，当然此问题还可以使用子查询完成，配合使用MAX函数，代码如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='SQL'><span class='line'><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">Salary</span><span class="p">)</span>
+</span><span class='line'><span class="k">FROM</span> <span class="n">Employee</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">Salary</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">Salary</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">Employee</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/remove-linked-list-elements/">Remove Linked List Elements</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T14:38:12+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:38 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Remove all elements from a linked list of integers that have value val.</p>
+
+<p>Example<br/>
+Given: 1&ndash;>2&ndash;>6&ndash;>3&ndash;>4&ndash;>5&ndash;>6,val=6<br/>
+return: 1&ndash;>2&ndash;>3&ndash;>4&ndash;>5</p>
+
+<p>这道题难度不大，属于在列表中删除特定元素的变种题。需要注意的点一是列表为空的情况，二是头元素需要删除以及删除头元素导致列表为空的情况。直接上代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">ListNode</span> <span class="nf">removeElements</span><span class="o">(</span><span class="n">ListNode</span> <span class="n">head</span><span class="o">,</span> <span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">head</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">while</span> <span class="o">(</span><span class="n">head</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">head</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">val</span><span class="o">){</span>
+</span><span class='line'>            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">head</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">ListNode</span> <span class="n">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">while</span><span class="o">(</span><span class="n">p</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">if</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">val</span><span class="o">){</span>
+</span><span class='line'>                <span class="n">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">else</span><span class="o">{</span>
+</span><span class='line'>                <span class="n">pre</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">head</span><span class="o">;</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -236,6 +375,14 @@ Your algorithm should have a linear runtime complexity.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/second-highest-salary/">Second Highest Salary</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/remove-linked-list-elements/">Remove Linked List Elements</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/24/single-number/">LeetCode 之 Single Number</a>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://aiyanxu.github.io/blog/2015/04/24/second-highest-salary/</loc>
+    <lastmod>2015-04-24T15:00:09+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://aiyanxu.github.io/blog/2015/04/24/remove-linked-list-elements/</loc>
+    <lastmod>2015-04-24T14:38:12+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://aiyanxu.github.io/blog/2015/04/24/single-number/</loc>
     <lastmod>2015-04-24T13:36:08+08:00</lastmod>
   </url>

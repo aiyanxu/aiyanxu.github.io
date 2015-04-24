@@ -1,0 +1,61 @@
+---
+layout: post
+title: "Path Sum"
+date: 2015-04-24 21:39:13 +0800
+comments: true
+categories: LeetCode
+---
+
+Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.
+
+For example:  
+Given the below binary tree and sum = 22,  
+```
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+          /\       \
+          7 2       1
+```
+
+树的题目我们很容易想到用递归解决，递归问题有两个重要的方面  
+1. 基本情况(或停止条件)  
+2. 问题分解  
+
+首先来看基本情况的确定  
+成功(找到叶节点)
+``` Java
+if (node.val == sum && node.left == null && node.right == null)
+    return true;
+```
+不成功(节点为空)
+``` Java
+if (node == null)
+    return false;
+```
+
+再看问题分解  
+以上面的例子来看，在根结点上寻找22，可以分解为在左右子结点上寻找17，因此有
+``` Java
+return func(node.left,sum-node.val) || func(node.right,sum-root.val)
+```
+
+全部代码如下：
+``` Java
+public class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if(root == null){
+            return false;
+        }
+        if(root.val == sum && root.left == null && root.right == null){
+            return true;
+        }
+        return hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val);
+    }
+}
+```
+
+
+

@@ -15,5 +15,6 @@ group :development do
   gem 'rb-fsevent', '~> 0.9'
   gem 'stringex', '~> 1.4.0'
 end
-
+gem 'therubyracer'
+gem 'execjs'
 gem 'sinatra', '~> 1.4.2'

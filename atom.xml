@@ -4,7 +4,7 @@
   <title><![CDATA[be a better man]]></title>
   <link href="http://aiyanxu.github.io/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-04-24T15:57:44+08:00</updated>
+  <updated>2015-04-24T21:22:40+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,208 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Minimum Window Substring]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/04/24/minimum-window-substring/"/>
+    <updated>2015-04-24T20:49:51+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/04/24/minimum-window-substring</id>
+    <content type="html"><![CDATA[<p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
+
+<p>For example,<br/>
+S = &ldquo;ADOBECODEBANC&rdquo;<br/>
+T = &ldquo;ABC&rdquo;<br/>
+Minimum window is &ldquo;BANC&rdquo;.</p>
+
+<p>这个问题第一感觉是使用动态规划，但问题后半段要求在O(n)的时间内完成，动态规划肯定是Low了。查看Tag发现写着<code>Hash Table</code>,<code>Two Pointers</code>。猜测<code>Hash Table</code>是用来记录字母的个数，<code>Two Pointers</code>一前一后记录着子串的长度。</p>
+
+<p>下面在代码中慢慢说明思路。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span> <span class="n">T</span><span class="o">.</span><span class="na">length</span><span class="o">();</span><span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)))</span>
+</span><span class='line'>        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">),</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">))+</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">),</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>首先统计出待搜查字符串中出现的字符和相应的出现次数。然后</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">minLen</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'><span class="kt">int</span> <span class="n">minStart</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'><span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="n">right</span><span class="o">&lt;</span><span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">();</span><span class="n">right</span><span class="o">++){</span>
+</span><span class='line'>    <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">))){</span>
+</span><span class='line'>        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">),</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">))-</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>            <span class="n">count</span><span class="o">++;</span>
+</span><span class='line'>        <span class="k">while</span><span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">T</span><span class="o">.</span><span class="na">length</span><span class="o">())</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>            <span class="k">if</span><span class="o">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">minLen</span><span class="o">)</span>
+</span><span class='line'>            <span class="o">{</span>
+</span><span class='line'>                <span class="n">minLen</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>                <span class="n">minStart</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">)))</span>
+</span><span class='line'>            <span class="o">{</span>
+</span><span class='line'>                <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">),</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">))+</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>                <span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">))&gt;</span><span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                    <span class="n">count</span><span class="o">--;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>            <span class="n">left</span><span class="o">++;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在for循环中，right变量的作用是向右扩大窗口，找到一个右边界确定的满足要求的子字符串。例如<br/>
+S = &ldquo;AAECDBUAAC&rdquo;<br/>
+T = &ldquo;ABC&rdquo;<br/>
+我们首先找到的是right=5(从0开始计数)，在这里说明一下，上面代码中的第8行和20行中的判断是为了判别S中像开头<code>AA</code>这种字母重复出现的情况。我们可以明显看出right=5时，子串&#8221;AAECDB&#8221;明显不是最短的子串，于是我们进入while循环开始进行修正。</p>
+
+<p>right右边界已经确定，在while循环中我们是在改变left左边界的值。我们在left和right之间的字符串已经不满足要求时会跳出while循环。上例中就是left=2,扫描过两个A时。上面的代码中对于条件是否满足是用count的值判定，这很巧妙也稍增加了理解难度。</p>
+
+<p>除了上面的说明外，代码中还有一些边界情况的处理，所有代码如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="n">String</span> <span class="nf">minWindow</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">,</span><span class="n">String</span> <span class="n">T</span><span class="o">){</span>
+</span><span class='line'>        <span class="k">if</span> <span class="o">(</span><span class="n">S</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">||</span> <span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>        <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Character</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;();</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">T</span><span class="o">.</span><span class="na">length</span><span class="o">();</span><span class="n">i</span><span class="o">++){</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)))</span>
+</span><span class='line'>                <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">),</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">))+</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>            <span class="k">else</span>
+</span><span class='line'>                <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">T</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">),</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">minLen</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">minStart</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span><span class="n">right</span><span class="o">&lt;</span><span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">();</span><span class="n">right</span><span class="o">++){</span>
+</span><span class='line'>            <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">))){</span>
+</span><span class='line'>                <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">),</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">))-</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>                <span class="k">if</span> <span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">right</span><span class="o">))</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>                    <span class="n">count</span><span class="o">++;</span>
+</span><span class='line'>                <span class="k">while</span><span class="o">(</span><span class="n">count</span> <span class="o">==</span> <span class="n">T</span><span class="o">.</span><span class="na">length</span><span class="o">())</span>
+</span><span class='line'>                <span class="o">{</span>
+</span><span class='line'>                    <span class="k">if</span><span class="o">(</span><span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="o">&lt;</span><span class="n">minLen</span><span class="o">)</span>
+</span><span class='line'>                    <span class="o">{</span>
+</span><span class='line'>                        <span class="n">minLen</span> <span class="o">=</span> <span class="n">right</span><span class="o">-</span><span class="n">left</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+</span><span class='line'>                        <span class="n">minStart</span> <span class="o">=</span> <span class="n">left</span><span class="o">;</span>
+</span><span class='line'>                    <span class="o">}</span>
+</span><span class='line'>                    <span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">)))</span>
+</span><span class='line'>                    <span class="o">{</span>
+</span><span class='line'>                        <span class="n">map</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">),</span> <span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">))+</span><span class="mi">1</span><span class="o">);</span>
+</span><span class='line'>                        <span class="k">if</span><span class="o">(</span><span class="n">map</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">left</span><span class="o">))&gt;</span><span class="mi">0</span><span class="o">)</span>
+</span><span class='line'>                        <span class="o">{</span>
+</span><span class='line'>                            <span class="n">count</span><span class="o">--;</span>
+</span><span class='line'>                        <span class="o">}</span>
+</span><span class='line'>                    <span class="o">}</span>
+</span><span class='line'>                    <span class="n">left</span><span class="o">++;</span>
+</span><span class='line'>                <span class="o">}</span>
+</span><span class='line'>            <span class="o">}</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">minLen</span><span class="o">&gt;</span><span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">())</span>
+</span><span class='line'>        <span class="o">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="s">&quot;&quot;</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">S</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="n">minStart</span><span class="o">,</span><span class="n">minStart</span><span class="o">+</span><span class="n">minLen</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Happy Number]]></title>

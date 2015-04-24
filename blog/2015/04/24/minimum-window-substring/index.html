@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>be a better man</title>
+  <title>Minimum Window Substring - be a better man</title>
   <meta name="author" content="Aiyanxu">
 
   
@@ -19,7 +19,7 @@ S = &ldquo; &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://aiyanxu.github.io/">
+  <link rel="canonical" href="http://aiyanxu.github.io/blog/2015/04/24/minimum-window-substring/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="be a better man" type="application/atom+xml">
@@ -64,15 +64,12 @@ S = &ldquo; &hellip;">
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/04/24/minimum-window-substring/">Minimum Window Substring</a></h1>
+      <h1 class="entry-title">Minimum Window Substring</h1>
     
     
       <p class="meta">
@@ -88,7 +85,7 @@ S = &ldquo; &hellip;">
   </header>
 
 
-  <div class="entry-content"><p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
+<div class="entry-content"><p>Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).</p>
 
 <p>For example,<br/>
 S = &ldquo;ADOBECODEBANC&rdquo;<br/>
@@ -283,394 +280,52 @@ T = &ldquo;ABC&rdquo;<br/>
 
 
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/happy-number/">Happy Number</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-24T15:38:59+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:38 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Write an algorithm to determine if a number is &ldquo;happy&rdquo;.</p>
-
-<p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
-
-<p>Example: 19 is a happy number</p>
-
-<p>1<sup>2</sup> + 9<sup>2</sup> = 82<br/>
-8<sup>2</sup> + 2<sup>2</sup> = 68<br/>
-6<sup>2</sup> + 8<sup>2</sup> = 100<br/>
-1<sup>2</sup> + 0<sup>2</sup> + 0<sup>2</sup> = 1</p>
-
-<p>我们先分析下算法的终止条件<br/>
-成功的情况是计算结果等于1<br/>
-失败的情况是陷入了死循环</p>
-
-<p>针对失败的情况，我们可以使用一个Set来记录之前出现过的计算结果，如果出现了重复的计算值，则数字不是Happy Number</p>
-
-<p>在计算的过程中需要求解数字每位的平方值，我们可以从数学角度分解出数字每一位的值，这里为了简单，我直接将数字转化成了字符串，然后遍历字符串的每一位时再将它转化成数字计算。</p>
-
-<p>代码为了简便，使用Python实现，这也可能规避了可能出现的数值溢出的情况</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
-</span><span class='line'>    <span class="k">def</span> <span class="nf">isHappy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-</span><span class='line'>        <span class="n">used</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
-</span><span class='line'>        <span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">used</span><span class="p">:</span>
-</span><span class='line'>            <span class="n">used</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</span><span class='line'>            <span class="nb">next</span> <span class="o">=</span> <span class="mi">0</span>
-</span><span class='line'>            <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
-</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
-</span><span class='line'>                <span class="nb">next</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="nb">next</span>
-</span><span class='line'>        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-</span><span class='line'>            <span class="k">return</span> <span class="bp">True</span>
-</span><span class='line'>        <span class="k">return</span> <span class="bp">False</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这个是LeetCode上新的题目，现在还不清楚是否有更加高效的算法，或者这个问题是否有数学解</p>
-</div>
-  
   
 
+<span class="byline author vcard">Posted by <span class="fn">Aiyanxu</span></span>
 
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/second-highest-salary/">Second Highest Salary</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
 
-<time class='entry-date' datetime='2015-04-24T15:00:09+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>3:00 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Write a SQL query to get the second highest salary from the Employee table.<br/>
-If there is no second highest salary,then the query should return <code>null</code></p>
-
-<p>需要查询第二高的薪水，对于有位置要求的查询，我首先想到了<code>LIMIT</code>关键字，题目同时要求去重，需要使用<code>DISTINCT</code>关键字</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='SQL'><span class='line'><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">Salary</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Salary</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面语句的问题是当结果为空时，返回的是<code>[]</code>,而不是<code>null</code>,解决办法是嵌套SELECT语句</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='SQL'><span class='line'><span class="k">SELECT</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">DISTINCT</span> <span class="n">Salary</span> <span class="k">FROM</span> <span class="n">Employee</span> <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">Salary</span> <span class="k">DESC</span> <span class="k">LIMIT</span> <span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>对于顺序问题的查询，我们也倾向于使用MAX，MIN这些统计函数，当然此问题还可以使用子查询完成，配合使用MAX函数，代码如下</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='SQL'><span class='line'><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">Salary</span><span class="p">)</span>
-</span><span class='line'><span class="k">FROM</span> <span class="n">Employee</span>
-</span><span class='line'><span class="k">WHERE</span> <span class="n">Salary</span> <span class="o">&lt;</span> <span class="p">(</span><span class="k">SELECT</span> <span class="k">MAX</span><span class="p">(</span><span class="n">Salary</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">Employee</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time class='entry-date' datetime='2015-04-24T20:49:51+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>8:49 pm</span></time>
       
-  <header>
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/leetcode/'>leetcode</a>
+  
+</span>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2015/04/24/remove-linked-list-elements/">Remove Linked List Elements</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-24T14:38:12+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>2:38 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Remove all elements from a linked list of integers that have value val.</p>
-
-<p>Example<br/>
-Given: 1&ndash;>2&ndash;>6&ndash;>3&ndash;>4&ndash;>5&ndash;>6,val=6<br/>
-return: 1&ndash;>2&ndash;>3&ndash;>4&ndash;>5</p>
-
-<p>这道题难度不大，属于在列表中删除特定元素的变种题。需要注意的点一是列表为空的情况，二是头元素需要删除以及删除头元素导致列表为空的情况。直接上代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="n">ListNode</span> <span class="nf">removeElements</span><span class="o">(</span><span class="n">ListNode</span> <span class="n">head</span><span class="o">,</span> <span class="kt">int</span> <span class="n">val</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">head</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">while</span> <span class="o">(</span><span class="n">head</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">head</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">val</span><span class="o">){</span>
-</span><span class='line'>            <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">head</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
-</span><span class='line'>            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
-</span><span class='line'>        <span class="n">ListNode</span> <span class="n">pre</span> <span class="o">=</span> <span class="n">head</span><span class="o">,</span><span class="n">p</span> <span class="o">=</span> <span class="n">head</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">while</span><span class="o">(</span><span class="n">p</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">){</span>
-</span><span class='line'>            <span class="k">if</span><span class="o">(</span><span class="n">p</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">val</span><span class="o">){</span>
-</span><span class='line'>                <span class="n">pre</span><span class="o">.</span><span class="na">next</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="k">else</span><span class="o">{</span>
-</span><span class='line'>                <span class="n">pre</span> <span class="o">=</span> <span class="n">p</span><span class="o">;</span>
-</span><span class='line'>            <span class="o">}</span>
-</span><span class='line'>            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="na">next</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">head</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://aiyanxu.github.io/blog/2015/04/24/minimum-window-substring/" data-via="" data-counturl="http://aiyanxu.github.io/blog/2015/04/24/minimum-window-substring/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/single-number/">LeetCode 之 Single Number</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-24T13:36:08+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:36 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Given an array of integers,every element appears twice except for one.Find that single one</p>
-
-<p>Note:<br/>
-Your algorithm should have a linear runtime complexity.</p>
-
-<p>线性运行时间说明我们最好遍历一次数组就得到结果。在遍历数组的同时，我们需要记住已经出现的数字，这里我们可以使用一个额外的字典。第一版代码如下</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">singleNumber</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>        <span class="n">Map</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">tmp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashMap</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">,</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span> <span class="n">i</span><span class="o">++){</span>
-</span><span class='line'>            <span class="k">if</span><span class="o">(!</span><span class="n">tmp</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span>
-</span><span class='line'>                <span class="n">tmp</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>                <span class="n">tmp</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">tmp</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">])+</span><span class="mi">1</span><span class="o">);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">key</span> <span class="o">:</span> <span class="n">tmp</span><span class="o">.</span><span class="na">keySet</span><span class="o">()){</span>
-</span><span class='line'>            <span class="k">if</span><span class="o">(</span><span class="n">tmp</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">key</span><span class="o">)</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span>
-</span><span class='line'>                <span class="n">res</span> <span class="o">=</span> <span class="n">key</span><span class="o">;</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面的代码实现了只遍历一次数组，但之后我们还遍历了一次tmp字典才得到了最终结果，同时我们只需要找出Single Number，是否可以不记录数字出现的具体次数。修改后的第二版代码：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">singleNumber</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>        <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span> <span class="n">tmp</span> <span class="o">=</span> <span class="k">new</span> <span class="n">HashSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;();</span>
-</span><span class='line'>        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span><span class="n">i</span><span class="o">&lt;</span><span class="n">A</span><span class="o">.</span><span class="na">length</span><span class="o">;</span><span class="n">i</span><span class="o">++){</span>
-</span><span class='line'>            <span class="k">if</span><span class="o">(</span><span class="n">tmp</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]))</span>
-</span><span class='line'>                <span class="n">tmp</span><span class="o">.</span><span class="na">remove</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
-</span><span class='line'>            <span class="k">else</span>
-</span><span class='line'>                <span class="n">tmp</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">A</span><span class="o">[</span><span class="n">i</span><span class="o">]);</span>
-</span><span class='line'>        <span class="o">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="o">(</span><span class="n">Integer</span><span class="o">)(</span><span class="n">tmp</span><span class="o">.</span><span class="na">toArray</span><span class="o">()[</span><span class="mi">0</span><span class="o">]);</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在新一版的代码中我们将Hash更换成了Set，因为数组中只有一个Single Number，最后我们只需将Set转换为数组，取出第一个元素即可。</p>
-
-<p>在前面的实现中，我们都使用到了额外的数据结构，如何做到不使用额外空间呢?</p>
-
-<p>在数理逻辑中，我们可以通过异或操作来判定两个数字是否相同。相同的两个数字进行按位异或结果为0，而一个数字与0按位异或结果仍是它之身。根据以上分析，第三版代码如下：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
-</span><span class='line'>     <span class="kd">public</span> <span class="kt">int</span> <span class="nf">singleNumber</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">A</span><span class="o">){</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">val</span> <span class="o">:</span> <span class="n">A</span><span class="o">)</span>
-</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">^</span> <span class="n">val</span><span class="o">;</span>
-</span><span class='line'>        <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
-</span><span class='line'>    <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment left" href="/blog/2015/04/24/happy-number/" title="Previous Post: Happy Number">&laquo; Happy Number</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/hello-world/">Hello World</a></h1>
-    
-    
-      <p class="meta">
-        
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-<time class='entry-date' datetime='2015-04-24T13:23:08+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:23 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>start to be a better man</p>
 </div>
-  
-  
 
-
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
 <aside class="sidebar">
   
     <section>
@@ -706,6 +361,7 @@ Your algorithm should have a linear runtime complexity.</p>
 
   
 </aside>
+
 
     </div>
   </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[be a better man]]></title>
   <link href="http://aiyanxu.github.io/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-04-24T15:13:43+08:00</updated>
+  <updated>2015-04-24T15:57:44+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Happy Number]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/04/24/happy-number/"/>
+    <updated>2015-04-24T15:38:59+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/04/24/happy-number</id>
+    <content type="html"><![CDATA[<p>Write an algorithm to determine if a number is &ldquo;happy&rdquo;.</p>
+
+<p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
+
+<p>Example: 19 is a happy number</p>
+
+<p>1<sup>2</sup> + 9<sup>2</sup> = 82<br/>
+8<sup>2</sup> + 2<sup>2</sup> = 68<br/>
+6<sup>2</sup> + 8<sup>2</sup> = 100<br/>
+1<sup>2</sup> + 0<sup>2</sup> + 0<sup>2</sup> = 1</p>
+
+<p>我们先分析下算法的终止条件<br/>
+成功的情况是计算结果等于1<br/>
+失败的情况是陷入了死循环</p>
+
+<p>针对失败的情况，我们可以使用一个Set来记录之前出现过的计算结果，如果出现了重复的计算值，则数字不是Happy Number</p>
+
+<p>在计算的过程中需要求解数字每位的平方值，我们可以从数学角度分解出数字每一位的值，这里为了简单，我直接将数字转化成了字符串，然后遍历字符串的每一位时再将它转化成数字计算。</p>
+
+<p>代码为了简便，使用Python实现，这也可能规避了可能出现的数值溢出的情况</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">isHappy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">used</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+</span><span class='line'>        <span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">used</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">used</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span class='line'>            <span class="nb">next</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>            <span class="n">s</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span class='line'>            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)):</span>
+</span><span class='line'>                <span class="nb">next</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="nb">int</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="nb">next</span>
+</span><span class='line'>        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">return</span> <span class="bp">True</span>
+</span><span class='line'>        <span class="k">return</span> <span class="bp">False</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这个是LeetCode上新的题目，现在还不清楚是否有更加高效的算法，或者这个问题是否有数学解</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Second Highest Salary]]></title>

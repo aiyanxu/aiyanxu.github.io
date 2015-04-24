@@ -9,8 +9,7 @@
   <meta name="author" content="Aiyanxu">
 
   
-  <meta name="description" content="Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n). For example,
-S = &ldquo; &hellip;">
+  <meta name="description" content="Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +65,114 @@ S = &ldquo; &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/path-sum/">Path Sum</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T21:39:13+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:39 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
+
+<p>For example:<br/>
+Given the below binary tree and sum = 22,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>          5
+</span><span class='line'>         / \
+</span><span class='line'>        4   8
+</span><span class='line'>       /   / \
+</span><span class='line'>      11  13  4
+</span><span class='line'>      /\       \
+</span><span class='line'>      7 2       1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>树的题目我们很容易想到用递归解决，递归问题有两个重要的方面<br/>
+1. 基本情况(或停止条件)<br/>
+2. 问题分解</p>
+
+<p>首先来看基本情况的确定<br/>
+成功(找到叶节点)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">sum</span> <span class="o">&amp;&amp;</span> <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不成功(节点为空)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="k">if</span> <span class="o">(</span><span class="n">node</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span>
+</span><span class='line'>    <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再看问题分解<br/>
+以上面的例子来看，在根结点上寻找22，可以分解为在左右子结点上寻找17，因此有</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="k">return</span> <span class="nf">func</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">sum</span><span class="o">-</span><span class="n">node</span><span class="o">.</span><span class="na">val</span><span class="o">)</span> <span class="o">||</span> <span class="n">func</span><span class="o">(</span><span class="n">node</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">sum</span><span class="o">-</span><span class="n">root</span><span class="o">.</span><span class="na">val</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>全部代码如下：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasPathSum</span><span class="o">(</span><span class="n">TreeNode</span> <span class="n">root</span><span class="o">,</span> <span class="kt">int</span> <span class="n">sum</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">root</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">if</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">val</span> <span class="o">==</span> <span class="n">sum</span> <span class="o">&amp;&amp;</span> <span class="n">root</span><span class="o">.</span><span class="na">left</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">root</span><span class="o">.</span><span class="na">right</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+</span><span class='line'>            <span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+</span><span class='line'>        <span class="o">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nf">hasPathSum</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">left</span><span class="o">,</span><span class="n">sum</span><span class="o">-</span><span class="n">root</span><span class="o">.</span><span class="na">val</span><span class="o">)</span> <span class="o">||</span> <span class="n">hasPathSum</span><span class="o">(</span><span class="n">root</span><span class="o">.</span><span class="na">right</span><span class="o">,</span><span class="n">sum</span><span class="o">-</span><span class="n">root</span><span class="o">.</span><span class="na">val</span><span class="o">);</span>
+</span><span class='line'>    <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -678,6 +785,10 @@ Your algorithm should have a linear runtime complexity.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/24/path-sum/">Path Sum</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/24/minimum-window-substring/">Minimum Window Substring</a>
       </li>
     
@@ -691,10 +802,6 @@ Your algorithm should have a linear runtime complexity.</p>
     
       <li class="post">
         <a href="/blog/2015/04/24/remove-linked-list-elements/">Remove Linked List Elements</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/24/single-number/">LeetCode 之 Single Number</a>
       </li>
     
   </ul>

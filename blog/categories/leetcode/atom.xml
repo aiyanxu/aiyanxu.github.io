@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Leetcode | be a better man]]></title>
   <link href="http://aiyanxu.github.io/blog/categories/leetcode/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-04-24T21:22:40+08:00</updated>
+  <updated>2015-04-24T22:04:48+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,64 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Path Sum]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/04/24/path-sum/"/>
+    <updated>2015-04-24T21:39:13+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/04/24/path-sum</id>
+    <content type="html"><![CDATA[<p>Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum.</p>
+
+<p>For example:<br/>
+Given the below binary tree and sum = 22,<br/>
+<code>
+              5
+             / \
+            4   8
+           /   / \
+          11  13  4
+          /\       \
+          7 2       1
+</code></p>
+
+<p>树的题目我们很容易想到用递归解决，递归问题有两个重要的方面<br/>
+1. 基本情况(或停止条件)<br/>
+2. 问题分解</p>
+
+<p>首先来看基本情况的确定<br/>
+成功(找到叶节点)
+<code>Java
+if (node.val == sum &amp;&amp; node.left == null &amp;&amp; node.right == null)
+    return true;
+</code>
+不成功(节点为空)
+<code>Java
+if (node == null)
+    return false;
+</code></p>
+
+<p>再看问题分解<br/>
+以上面的例子来看，在根结点上寻找22，可以分解为在左右子结点上寻找17，因此有
+<code>Java
+return func(node.left,sum-node.val) || func(node.right,sum-root.val)
+</code></p>
+
+<p>全部代码如下：
+<code>Java
+public class Solution {
+    public boolean hasPathSum(TreeNode root, int sum) {
+        if(root == null){
+            return false;
+        }
+        if(root.val == sum &amp;&amp; root.left == null &amp;&amp; root.right == null){
+            return true;
+        }
+        return hasPathSum(root.left,sum-root.val) || hasPathSum(root.right,sum-root.val);
+    }
+}
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Minimum Window Substring]]></title>
@@ -234,73 +292,6 @@ return: 1&ndash;>2&ndash;>3&ndash;>4&ndash;>5</p>
             p = p.next;
         }
         return head;
-    }
-}
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[LeetCode 之 Single Number]]></title>
-    <link href="http://aiyanxu.github.io/blog/2015/04/24/single-number/"/>
-    <updated>2015-04-24T13:36:08+08:00</updated>
-    <id>http://aiyanxu.github.io/blog/2015/04/24/single-number</id>
-    <content type="html"><![CDATA[<p>Given an array of integers,every element appears twice except for one.Find that single one</p>
-
-<p>Note:<br/>
-Your algorithm should have a linear runtime complexity.</p>
-
-<p>线性运行时间说明我们最好遍历一次数组就得到结果。在遍历数组的同时，我们需要记住已经出现的数字，这里我们可以使用一个额外的字典。第一版代码如下</p>
-
-<pre><code class="Java">public class Solution {
-    public int singleNumber(int[] A) {
-        int res = 0;
-        Map&lt;Integer,Integer&gt; tmp = new HashMap&lt;Integer,Integer&gt;();
-
-        for(int i=0; i&lt;A.length; i++){
-            if(!tmp.containsKey(A[i]))
-                tmp.put(A[i], 1);
-            else
-                tmp.put(A[i], tmp.get(A[i])+1);
-        }
-
-        for(int key : tmp.keySet()){
-            if(tmp.get(key) == 1)
-                res = key;
-        }
-        return res;
-    }
-}
-</code></pre>
-
-<p>上面的代码实现了只遍历一次数组，但之后我们还遍历了一次tmp字典才得到了最终结果，同时我们只需要找出Single Number，是否可以不记录数字出现的具体次数。修改后的第二版代码：</p>
-
-<pre><code class="Java">public class Solution {
-    public int singleNumber(int[] A) {
-        HashSet&lt;Integer&gt; tmp = new HashSet&lt;Integer&gt;();
-        for(int i=0;i&lt;A.length;i++){
-            if(tmp.contains(A[i]))
-                tmp.remove(A[i]);
-            else
-                tmp.add(A[i]);
-        }
-        return (Integer)(tmp.toArray()[0]);
-    }
-}
-</code></pre>
-
-<p>在新一版的代码中我们将Hash更换成了Set，因为数组中只有一个Single Number，最后我们只需将Set转换为数组，取出第一个元素即可。</p>
-
-<p>在前面的实现中，我们都使用到了额外的数据结构，如何做到不使用额外空间呢?</p>
-
-<p>在数理逻辑中，我们可以通过异或操作来判定两个数字是否相同。相同的两个数字进行按位异或结果为0，而一个数字与0按位异或结果仍是它之身。根据以上分析，第三版代码如下：</p>
-
-<pre><code class="Java">public class Solution {
-     public int singleNumber(int[] A){
-        int res = 0;
-        for(int val : A)
-            res = res ^ val;
-        return res;
     }
 }
 </code></pre>

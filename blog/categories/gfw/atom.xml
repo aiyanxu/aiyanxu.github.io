@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Gfw | be a better man]]></title>
+  <link href="http://aiyanxu.github.io/blog/categories/gfw/atom.xml" rel="self"/>
+  <link href="http://aiyanxu.github.io/"/>
+  <updated>2015-04-25T14:05:25+08:00</updated>
+  <id>http://aiyanxu.github.io/</id>
+  <author>
+    <name><![CDATA[Aiyanxu]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Shadowsocks Guide]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/04/24/shadowsocks-guide/"/>
+    <updated>2015-04-24T22:29:10+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/04/24/shadowsocks-guide</id>
+    <content type="html"><![CDATA[<p>shadowsocks基于Socket通信，利用远端服务器做代理，实现翻墙。</p>
+
+<h3>安装</h3>
+
+<h5>PyPI</h5>
+
+<pre><code>pip install shadowsocks
+</code></pre>
+
+<h5>Debian/Ubuntu</h5>
+
+<pre><code>wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo apt-key add -
+echo "deb http://shadowsocks.org/debian wheezy main" &gt;&gt; /etc/apt/sources.list
+</code></pre>
+
+<h3>配置</h3>
+
+<pre><code>{
+    "server":"my_server_ip",
+    "server_port":8388,
+    "local_port":1080,
+    "password":"barfoo!",
+    "timeout":600,
+    "method":"table"
+}
+</code></pre>
+
+<p>为了支持IPV6，可以将Server地址写为<code>::</code>如
+<code>
+{
+    "server":"::",
+    "server_port":1024,
+    "local_port":1080,
+    "password":"aiyanxu",
+    "timeout":600,
+    "method":"aes-256-cfb"
+}
+</code></p>
+
+<h3>启动</h3>
+
+<h5>服务器端</h5>
+
+<pre><code>ssserver -c config-file
+</code></pre>
+
+<h5>客户端</h5>
+
+<pre><code>sslocal -c config-file
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Leetcode | be a better man]]></title>
   <link href="http://aiyanxu.github.io/blog/categories/leetcode/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-04-24T22:04:48+08:00</updated>
+  <updated>2015-04-25T14:05:25+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Number of 1 Bits]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/04/25/number-of-1-bits/"/>
+    <updated>2015-04-25T12:42:38+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/04/25/number-of-1-bits</id>
+    <content type="html"><![CDATA[<p>Write a function that takes an unsigned integer and returns the number of ’1&#8217; bits it has (also known as the Hamming weight).</p>
+
+<p>For example, the 32-bit integer ’11&#8217; has binary representation 00000000000000000000000000001011, so the function should return 3.</p>
+
+<p>问题需要Bit Manipulation，这里选用与操作，初版代码（Python编写）
+<code>Python
+class Solution:
+    def hammingWeight(self,n):
+        current = 1
+        count = 0
+        for i in range(32):
+            res = current &amp; n
+            if res == current:
+                count += 1
+            current = current &lt;&lt; 1
+        return count
+</code>
+上诉代码存在的问题有：<br/>
+1. 将循环次数写定在了代码中，不是一个灵活的方法<br/>
+2. current右移，如果n中右边已经出现连续的0位，算法仍然继续，效率低</p>
+
+<p>改进后采用左移思想的代码：
+<code>Python
+class Solution:
+    def hammingWeight(self,n):
+        count = 0
+        while n != 0:
+            count += n &amp; 1
+            n = n &gt;&gt; 1
+        return count
+</code></p>
+
+<p>从算术角度来看，跟上述的左移思想是类似的
+<code>Python
+class Solution:
+    def hammingWeight(self,n):
+        count = 0
+        while n != 0:
+            if n % 2 == 1:
+                count += 1
+            n /= 2
+        return count
+</code>
+针对位操作算法我们还可以做出以下优化：
+<code>
+class Solution:
+    def hammingWeight(self,n):
+        count = 0
+        while n != 0:
+            n &amp;= (n-1)
+            count += 1
+        return count
+</code>
+这其中的思想也可以用来判断一个数字是不是2的整数次幂</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Path Sum]]></title>
@@ -255,45 +317,6 @@ If there is no second highest salary,then the query should return <code>null</co
 <pre><code class="SQL">SELECT MAX(Salary)
 FROM Employee
 WHERE Salary &lt; (SELECT MAX(Salary) FROM Employee);
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Remove Linked List Elements]]></title>
-    <link href="http://aiyanxu.github.io/blog/2015/04/24/remove-linked-list-elements/"/>
-    <updated>2015-04-24T14:38:12+08:00</updated>
-    <id>http://aiyanxu.github.io/blog/2015/04/24/remove-linked-list-elements</id>
-    <content type="html"><![CDATA[<p>Remove all elements from a linked list of integers that have value val.</p>
-
-<p>Example<br/>
-Given: 1&ndash;>2&ndash;>6&ndash;>3&ndash;>4&ndash;>5&ndash;>6,val=6<br/>
-return: 1&ndash;>2&ndash;>3&ndash;>4&ndash;>5</p>
-
-<p>这道题难度不大，属于在列表中删除特定元素的变种题。需要注意的点一是列表为空的情况，二是头元素需要删除以及删除头元素导致列表为空的情况。直接上代码：</p>
-
-<pre><code class="Java">public class Solution {
-    public ListNode removeElements(ListNode head, int val) {
-        if(head == null)
-            return null;
-        while (head != null &amp;&amp; head.val == val){
-            head = head.next;
-        }
-        if(head == null)
-            return null;
-        ListNode pre = head,p = head;
-        while(p != null){
-            if(p.val == val){
-                pre.next = p.next;
-            }
-            else{
-                pre = p;
-            }
-            p = p.next;
-        }
-        return head;
-    }
-}
 </code></pre>
 ]]></content>
   </entry>

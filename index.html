@@ -9,7 +9,7 @@
   <meta name="author" content="Aiyanxu">
 
   
-  <meta name="description" content="Given a binary tree and a sum, determine if the tree has a root-to-leaf path such that adding up all the values along the path equals the given sum. &hellip;">
+  <meta name="description" content="Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight). For example, the 32-bit &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +65,257 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/25/number-of-1-bits/">Number of 1 Bits</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-25T12:42:38+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>25</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:42 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Write a function that takes an unsigned integer and returns the number of ’1&#8217; bits it has (also known as the Hamming weight).</p>
+
+<p>For example, the 32-bit integer ’11&#8217; has binary representation 00000000000000000000000000001011, so the function should return 3.</p>
+
+<p>问题需要Bit Manipulation，这里选用与操作，初版代码（Python编写）</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">current</span> <span class="o">=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">):</span>
+</span><span class='line'>            <span class="n">res</span> <span class="o">=</span> <span class="n">current</span> <span class="o">&amp;</span> <span class="n">n</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">res</span> <span class="o">==</span> <span class="n">current</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上诉代码存在的问题有：<br/>
+1. 将循环次数写定在了代码中，不是一个灵活的方法<br/>
+2. current右移，如果n中右边已经出现连续的0位，算法仍然继续，效率低</p>
+
+<p>改进后采用左移思想的代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="n">n</span> <span class="o">&amp;</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">=</span> <span class="n">n</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>从算术角度来看，跟上述的左移思想是类似的</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="k">if</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+</span><span class='line'>                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">/=</span> <span class="mi">2</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>针对位操作算法我们还可以做出以下优化：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='Python'><span class='line'><span class="k">class</span> <span class="nc">Solution</span><span class="p">:</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">hammingWeight</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">n</span><span class="p">):</span>
+</span><span class='line'>        <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="k">while</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+</span><span class='line'>            <span class="n">n</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span class='line'>        <span class="k">return</span> <span class="n">count</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这其中的思想也可以用来判断一个数字是不是2的整数次幂</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/watir-guide/">Watir Guide</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T22:46:16+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:46 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/shadowsocks-guide/">Shadowsocks Guide</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T22:29:10+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:29 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>shadowsocks基于Socket通信，利用远端服务器做代理，实现翻墙。</p>
+
+<h3>安装</h3>
+
+<h5>PyPI</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install shadowsocks</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Debian/Ubuntu</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo apt-key add -
+</span><span class='line'>echo "deb http://shadowsocks.org/debian wheezy main" &gt;&gt; /etc/apt/sources.list</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>配置</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    "server":"my_server_ip",
+</span><span class='line'>    "server_port":8388,
+</span><span class='line'>    "local_port":1080,
+</span><span class='line'>    "password":"barfoo!",
+</span><span class='line'>    "timeout":600,
+</span><span class='line'>    "method":"table"
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为了支持IPV6，可以将Server地址写为<code>::</code>如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    "server":"::",
+</span><span class='line'>    "server_port":1024,
+</span><span class='line'>    "local_port":1080,
+</span><span class='line'>    "password":"aiyanxu",
+</span><span class='line'>    "timeout":600,
+</span><span class='line'>    "method":"aes-256-cfb"
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>启动</h3>
+
+<h5>服务器端</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssserver -c config-file</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>客户端</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sslocal -c config-file</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -785,23 +1036,23 @@ Your algorithm should have a linear runtime complexity.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/25/number-of-1-bits/">Number of 1 Bits</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/watir-guide/">Watir Guide</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/shadowsocks-guide/">Shadowsocks Guide</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/24/path-sum/">Path Sum</a>
       </li>
     
       <li class="post">
         <a href="/blog/2015/04/24/minimum-window-substring/">Minimum Window Substring</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/24/happy-number/">Happy Number</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/24/second-highest-salary/">Second Highest Salary</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/24/remove-linked-list-elements/">Remove Linked List Elements</a>
       </li>
     
   </ul>

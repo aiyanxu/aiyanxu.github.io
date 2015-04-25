@@ -1,0 +1,280 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Shadowsocks Guide - be a better man</title>
+  <meta name="author" content="Aiyanxu">
+
+  
+  <meta name="description" content="shadowsocks基于Socket通信，利用远端服务器做代理，实现翻墙。 安装 PyPI 1
+pip install shadowsocks Debian/Ubuntu 1
+2
+wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://aiyanxu.github.io/blog/2015/04/24/shadowsocks-guide/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="be a better man" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">be a better man</a></h1>
+  
+    <h2>enjoy the life</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="aiyanxu.github.io">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Shadowsocks Guide</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T22:29:10+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:29 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>shadowsocks基于Socket通信，利用远端服务器做代理，实现翻墙。</p>
+
+<h3>安装</h3>
+
+<h5>PyPI</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>pip install shadowsocks</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>Debian/Ubuntu</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>wget -O- http://shadowsocks.org/debian/1D27208A.gpg | sudo apt-key add -
+</span><span class='line'>echo "deb http://shadowsocks.org/debian wheezy main" &gt;&gt; /etc/apt/sources.list</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>配置</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    "server":"my_server_ip",
+</span><span class='line'>    "server_port":8388,
+</span><span class='line'>    "local_port":1080,
+</span><span class='line'>    "password":"barfoo!",
+</span><span class='line'>    "timeout":600,
+</span><span class='line'>    "method":"table"
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为了支持IPV6，可以将Server地址写为<code>::</code>如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{
+</span><span class='line'>    "server":"::",
+</span><span class='line'>    "server_port":1024,
+</span><span class='line'>    "local_port":1080,
+</span><span class='line'>    "password":"aiyanxu",
+</span><span class='line'>    "timeout":600,
+</span><span class='line'>    "method":"aes-256-cfb"
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>启动</h3>
+
+<h5>服务器端</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ssserver -c config-file</span></code></pre></td></tr></table></div></figure>
+
+
+<h5>客户端</h5>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sslocal -c config-file</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Aiyanxu</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T22:29:10+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>10:29 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/gfw/'>gfw</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://aiyanxu.github.io/blog/2015/04/24/shadowsocks-guide/" data-via="" data-counturl="http://aiyanxu.github.io/blog/2015/04/24/shadowsocks-guide/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/04/24/path-sum/" title="Previous Post: Path Sum">&laquo; Path Sum</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/04/24/watir-guide/" title="Next Post: watir guide">watir guide &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/04/25/number-of-1-bits/">Number of 1 Bits</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/watir-guide/">Watir Guide</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/shadowsocks-guide/">Shadowsocks Guide</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/path-sum/">Path Sum</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/04/24/minimum-window-substring/">Minimum Window Substring</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Aiyanxu -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

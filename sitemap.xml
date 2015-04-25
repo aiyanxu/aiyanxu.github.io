@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://aiyanxu.github.io/blog/2015/04/25/number-of-1-bits/</loc>
+    <lastmod>2015-04-25T12:42:38+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://aiyanxu.github.io/blog/2015/04/24/watir-guide/</loc>
+    <lastmod>2015-04-24T22:46:16+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://aiyanxu.github.io/blog/2015/04/24/shadowsocks-guide/</loc>
+    <lastmod>2015-04-24T22:29:10+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://aiyanxu.github.io/blog/2015/04/24/path-sum/</loc>
     <lastmod>2015-04-24T21:39:13+08:00</lastmod>
   </url>
@@ -36,5 +48,8 @@
   </url>
   <url>
     <loc>http://aiyanxu.github.io/blog/categories/leetcode/</loc>
+  </url>
+  <url>
+    <loc>http://aiyanxu.github.io/blog/categories/gfw/</loc>
   </url>
 </urlset>

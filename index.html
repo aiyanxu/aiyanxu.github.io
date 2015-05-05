@@ -9,7 +9,11 @@
   <meta name="author" content="Aiyanxu">
 
   
-  <meta name="description" content="Write a function that takes an unsigned integer and returns the number of ’1' bits it has (also known as the Hamming weight). For example, the 32-bit &hellip;">
+  <meta name="description" content="Reverse digits of an integer. Example1: x = 123, return 321
+Example2: x = -123, return -321 这道题本身难度不大，但针对题目本身，我们有几点要事先考虑：
+1. 溢出的问题
+2. 逆转后的数字对应首几位是0
+3 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -65,6 +69,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/05/reverse-integer/">Reverse Integer</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-05T09:43:00+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>9:43 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Reverse digits of an integer.</p>
+
+<p>Example1: x = 123, return 321<br/>
+Example2: x = -123, return -321</p>
+
+<p>这道题本身难度不大，但针对题目本身，我们有几点要事先考虑：<br/>
+1. 溢出的问题<br/>
+2. 逆转后的数字对应首几位是0<br/>
+3. 符号位的问题</p>
+
+<p>最初的实现中我写了很多条件判断来处理上面的三种情况，但仔细分析后发现通过基本的数学运算就可以一次性解决</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">reverse</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">){</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">while</span><span class="o">(</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">){</span>
+</span><span class='line'>          <span class="k">if</span><span class="o">(</span><span class="n">res</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">/</span><span class="mi">10</span><span class="o">)</span> <span class="o">||</span> <span class="n">res</span> <span class="o">&lt;</span> <span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">/</span><span class="mi">10</span><span class="o">))</span>
+</span><span class='line'>              <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>          <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">;</span>
+</span><span class='line'>          <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面代码的7,8两行是代码最关键的地方</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -994,36 +1066,9 @@ Your algorithm should have a linear runtime complexity.</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/hello-world/">Hello World</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-24T13:23:08+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>1:23 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>start to be a better man</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/posts/2">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -1034,6 +1079,10 @@ Your algorithm should have a linear runtime complexity.</p>
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/05/05/reverse-integer/">Reverse Integer</a>
+      </li>
     
       <li class="post">
         <a href="/blog/2015/04/25/number-of-1-bits/">Number of 1 Bits</a>
@@ -1049,10 +1098,6 @@ Your algorithm should have a linear runtime complexity.</p>
     
       <li class="post">
         <a href="/blog/2015/04/24/path-sum/">Path Sum</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/04/24/minimum-window-substring/">Minimum Window Substring</a>
       </li>
     
   </ul>

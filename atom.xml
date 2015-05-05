@@ -4,7 +4,7 @@
   <title><![CDATA[be a better man]]></title>
   <link href="http://aiyanxu.github.io/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-04-25T14:05:25+08:00</updated>
+  <updated>2015-05-05T09:59:49+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reverse Integer]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/05/05/reverse-integer/"/>
+    <updated>2015-05-05T09:43:00+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/05/05/reverse-integer</id>
+    <content type="html"><![CDATA[<p>Reverse digits of an integer.</p>
+
+<p>Example1: x = 123, return 321<br/>
+Example2: x = -123, return -321</p>
+
+<p>这道题本身难度不大，但针对题目本身，我们有几点要事先考虑：<br/>
+1. 溢出的问题<br/>
+2. 逆转后的数字对应首几位是0<br/>
+3. 符号位的问题</p>
+
+<p>最初的实现中我写了很多条件判断来处理上面的三种情况，但仔细分析后发现通过基本的数学运算就可以一次性解决</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='Java'><span class='line'><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+</span><span class='line'>    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">reverse</span><span class="o">(</span><span class="kt">int</span> <span class="n">x</span><span class="o">){</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">res</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>      <span class="k">while</span><span class="o">(</span><span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">){</span>
+</span><span class='line'>          <span class="k">if</span><span class="o">(</span><span class="n">res</span> <span class="o">&gt;</span> <span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MAX_VALUE</span><span class="o">/</span><span class="mi">10</span><span class="o">)</span> <span class="o">||</span> <span class="n">res</span> <span class="o">&lt;</span> <span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">MIN_VALUE</span><span class="o">/</span><span class="mi">10</span><span class="o">))</span>
+</span><span class='line'>              <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+</span><span class='line'>          <span class="n">res</span> <span class="o">=</span> <span class="n">res</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">;</span>
+</span><span class='line'>          <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">/</span><span class="mi">10</span><span class="o">;</span>
+</span><span class='line'>      <span class="o">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">res</span><span class="o">;</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面代码的7,8两行是代码最关键的地方</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Number of 1 Bits]]></title>

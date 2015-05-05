@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Leetcode | be a better man]]></title>
   <link href="http://aiyanxu.github.io/blog/categories/leetcode/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-04-25T14:05:25+08:00</updated>
+  <updated>2015-05-05T09:59:49+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reverse Integer]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/05/05/reverse-integer/"/>
+    <updated>2015-05-05T09:43:00+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/05/05/reverse-integer</id>
+    <content type="html"><![CDATA[<p>Reverse digits of an integer.</p>
+
+<p>Example1: x = 123, return 321<br/>
+Example2: x = -123, return -321</p>
+
+<p>这道题本身难度不大，但针对题目本身，我们有几点要事先考虑：<br/>
+1. 溢出的问题<br/>
+2. 逆转后的数字对应首几位是0<br/>
+3. 符号位的问题</p>
+
+<p>最初的实现中我写了很多条件判断来处理上面的三种情况，但仔细分析后发现通过基本的数学运算就可以一次性解决</p>
+
+<pre><code class="Java">public class Solution {
+    public int reverse(int x){
+        int res = 0;
+        while(x != 0){
+            if(res &gt; (Integer.MAX_VALUE/10) || res &lt; (Integer.MIN_VALUE/10))
+                return 0;
+            res = res * 10 + x % 10 ;
+            x = x/10;
+        }
+        return res;
+    }
+}
+</code></pre>
+
+<p>上面代码的7,8两行是代码最关键的地方</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Number of 1 Bits]]></title>
@@ -291,33 +326,6 @@ T = &ldquo;ABC&rdquo;<br/>
 </code></pre>
 
 <p>这个是LeetCode上新的题目，现在还不清楚是否有更加高效的算法，或者这个问题是否有数学解</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Second Highest Salary]]></title>
-    <link href="http://aiyanxu.github.io/blog/2015/04/24/second-highest-salary/"/>
-    <updated>2015-04-24T15:00:09+08:00</updated>
-    <id>http://aiyanxu.github.io/blog/2015/04/24/second-highest-salary</id>
-    <content type="html"><![CDATA[<p>Write a SQL query to get the second highest salary from the Employee table.<br/>
-If there is no second highest salary,then the query should return <code>null</code></p>
-
-<p>需要查询第二高的薪水，对于有位置要求的查询，我首先想到了<code>LIMIT</code>关键字，题目同时要求去重，需要使用<code>DISTINCT</code>关键字</p>
-
-<pre><code class="SQL">SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1,1;
-</code></pre>
-
-<p>上面语句的问题是当结果为空时，返回的是<code>[]</code>,而不是<code>null</code>,解决办法是嵌套SELECT语句</p>
-
-<pre><code class="SQL">SELECT (SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT 1,1);
-</code></pre>
-
-<p>对于顺序问题的查询，我们也倾向于使用MAX，MIN这些统计函数，当然此问题还可以使用子查询完成，配合使用MAX函数，代码如下</p>
-
-<pre><code class="SQL">SELECT MAX(Salary)
-FROM Employee
-WHERE Salary &lt; (SELECT MAX(Salary) FROM Employee);
-</code></pre>
 ]]></content>
   </entry>
   

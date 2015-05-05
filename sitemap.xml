@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://aiyanxu.github.io/blog/2015/05/05/reverse-integer/</loc>
+    <lastmod>2015-05-05T09:43:00+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://aiyanxu.github.io/blog/2015/04/25/number-of-1-bits/</loc>
     <lastmod>2015-04-25T12:42:38+08:00</lastmod>
   </url>

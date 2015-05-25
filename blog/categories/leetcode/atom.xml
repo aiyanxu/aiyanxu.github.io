@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Leetcode | be a better man]]></title>
   <link href="http://aiyanxu.github.io/blog/categories/leetcode/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-05-05T09:59:49+08:00</updated>
+  <updated>2015-05-25T15:16:24+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,96 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Isomorphic Strings]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/05/25/isomorphic-strings/"/>
+    <updated>2015-05-25T14:54:53+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/05/25/isomorphic-strings</id>
+    <content type="html"><![CDATA[<p>Given two strings s and t, determine if they are isomorphic.</p>
+
+<p>Two strings are isomorphic if the characters in s can be replaced to get t.</p>
+
+<p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.</p>
+
+<p>For example,
+Given &ldquo;egg&rdquo;, &ldquo;add&rdquo;, return true.</p>
+
+<p>Given &ldquo;foo&rdquo;, &ldquo;bar&rdquo;, return false.</p>
+
+<p>Given &ldquo;paper&rdquo;, &ldquo;title&rdquo;, return true.</p>
+
+<p><strong>Note</strong>:
+You may assume both s and t have the same length.</p>
+
+<p>这道题我们很显然地想到要用Hash去记录之前已经出现过的字母。我最初步的想法是遍历s和t，遇到hash中没有的key时，就设置hash[s[idx]] = t[idx],而当hash中已经存在key时，就检测hash[s[idx]] == t[idx],不相等的话返回False，Ruby版代码如下
+<code>Ruby
+def is_isomorphic(s,t)
+  length = s.size
+  hash = Hash.new('')
+  0.upto(length-1) do |idx|
+    if hash.has_key?(s[idx])
+      return false if hash[s[idx]] != t[idx]
+    else
+      hash[s[idx]] = t[idx]
+    end
+  end
+  return true
+end
+</code>
+上面的代码是有问题的，当遇见ab和aa时就出现了错误，这说明在key不存在时，我们还是需要检测之前的value值中有没有现在需要映射到的value，有的话还是返回False。解决后的代码：
+<code>Ruby
+def is_isomorphic(s,t)
+  length = s.size
+  hash = Hash.new('')
+  0.upto(length-1) do |idx|
+    if hash.has_key?(s[idx])
+      return false if hash[s[idx]] != t[idx]
+    else
+      return false if hash.values.include? t[idx]
+      hash[s[idx]] = t[idx]
+    end
+  end
+  return true
+end
+</code>
+上面的代码可以正常运行，但感觉第8行中的hash.values的使用效率不高，于是用一个Set集合代替
+<code>Ruby
+def is_isomorphic(s,t)
+  length = s.size
+  hash = Hash.new('')
+  words = Set.new
+  0.upto(length-1) do |idx|
+    if hash.has_key?(s[idx])
+      return false if hash[s[idx]] != t[idx]
+    else
+      return false if words.include? t[idx]
+      hash[s[idx]] = t[idx]
+      words &lt;&lt; t[idx]
+    end
+  end
+  return true
+end
+</code>
+同时经过分析，发现只有在遍历s,t中出现重复字母时，才是问题的复杂点。不适用Set，用两个Hash表也可以解决</p>
+
+<pre><code class="Ruby">def is_isomorphic(s,t)
+  length = s.size
+  hash_s = Hash.new('')
+  hash_t = Hash.new('')
+  0.upto(length-1) do |idx|
+    if hash_s.has_key?(s[idx]) or hash_t.has_key?(t[idx])
+      return false if hash_s[s[idx]] != hash_t[t[idx]]
+    else
+      hash_s[s[idx]] = idx
+      hash_t[t[idx]] = idx
+    end
+  end
+  return true
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reverse Integer]]></title>
@@ -281,51 +371,6 @@ T = &ldquo;ABC&rdquo;<br/>
     }
 }
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Happy Number]]></title>
-    <link href="http://aiyanxu.github.io/blog/2015/04/24/happy-number/"/>
-    <updated>2015-04-24T15:38:59+08:00</updated>
-    <id>http://aiyanxu.github.io/blog/2015/04/24/happy-number</id>
-    <content type="html"><![CDATA[<p>Write an algorithm to determine if a number is &ldquo;happy&rdquo;.</p>
-
-<p>A happy number is a number defined by the following process: Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process ends in 1 are happy numbers.</p>
-
-<p>Example: 19 is a happy number</p>
-
-<p>1<sup>2</sup> + 9<sup>2</sup> = 82<br/>
-8<sup>2</sup> + 2<sup>2</sup> = 68<br/>
-6<sup>2</sup> + 8<sup>2</sup> = 100<br/>
-1<sup>2</sup> + 0<sup>2</sup> + 0<sup>2</sup> = 1</p>
-
-<p>我们先分析下算法的终止条件<br/>
-成功的情况是计算结果等于1<br/>
-失败的情况是陷入了死循环</p>
-
-<p>针对失败的情况，我们可以使用一个Set来记录之前出现过的计算结果，如果出现了重复的计算值，则数字不是Happy Number</p>
-
-<p>在计算的过程中需要求解数字每位的平方值，我们可以从数学角度分解出数字每一位的值，这里为了简单，我直接将数字转化成了字符串，然后遍历字符串的每一位时再将它转化成数字计算。</p>
-
-<p>代码为了简便，使用Python实现，这也可能规避了可能出现的数值溢出的情况</p>
-
-<pre><code class="Python">class Solution:
-    def isHappy(self, n):
-        used = set()
-        while n != 1 and not n in used:
-            used.add(n)
-            next = 0
-            s = str(n)
-            for i in range(len(s)):
-                next += int(s[i]) * int(s[i])
-            n = next
-        if n == 1:
-            return True
-        return False
-</code></pre>
-
-<p>这个是LeetCode上新的题目，现在还不清楚是否有更加高效的算法，或者这个问题是否有数学解</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[be a better man]]></title>
   <link href="http://aiyanxu.github.io/atom.xml" rel="self"/>
   <link href="http://aiyanxu.github.io/"/>
-  <updated>2015-05-05T09:59:49+08:00</updated>
+  <updated>2015-05-25T15:16:24+08:00</updated>
   <id>http://aiyanxu.github.io/</id>
   <author>
     <name><![CDATA[Aiyanxu]]></name>
@@ -12,6 +12,186 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Isomorphic Strings]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/05/25/isomorphic-strings/"/>
+    <updated>2015-05-25T14:54:53+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/05/25/isomorphic-strings</id>
+    <content type="html"><![CDATA[<p>Given two strings s and t, determine if they are isomorphic.</p>
+
+<p>Two strings are isomorphic if the characters in s can be replaced to get t.</p>
+
+<p>All occurrences of a character must be replaced with another character while preserving the order of characters. No two characters may map to the same character but a character may map to itself.</p>
+
+<p>For example,
+Given &ldquo;egg&rdquo;, &ldquo;add&rdquo;, return true.</p>
+
+<p>Given &ldquo;foo&rdquo;, &ldquo;bar&rdquo;, return false.</p>
+
+<p>Given &ldquo;paper&rdquo;, &ldquo;title&rdquo;, return true.</p>
+
+<p><strong>Note</strong>:
+You may assume both s and t have the same length.</p>
+
+<p>这道题我们很显然地想到要用Hash去记录之前已经出现过的字母。我最初步的想法是遍历s和t，遇到hash中没有的key时，就设置hash[s[idx]] = t[idx],而当hash中已经存在key时，就检测hash[s[idx]] == t[idx],不相等的话返回False，Ruby版代码如下</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='Ruby'><span class='line'><span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>  <span class="nb">hash</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">0</span><span class="o">.</span><span class="n">upto</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">idx</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">hash</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="nb">hash</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">!=</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="nb">hash</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">=</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的代码是有问题的，当遇见ab和aa时就出现了错误，这说明在key不存在时，我们还是需要检测之前的value值中有没有现在需要映射到的value，有的话还是返回False。解决后的代码：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='Ruby'><span class='line'><span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>  <span class="nb">hash</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">0</span><span class="o">.</span><span class="n">upto</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">idx</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">hash</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="nb">hash</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">!=</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="nb">hash</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">include?</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>      <span class="nb">hash</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">=</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的代码可以正常运行，但感觉第8行中的hash.values的使用效率不高，于是用一个Set集合代替</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='Ruby'><span class='line'><span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>  <span class="nb">hash</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">words</span> <span class="o">=</span> <span class="no">Set</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="mi">0</span><span class="o">.</span><span class="n">upto</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">idx</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="nb">hash</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="nb">hash</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">!=</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="n">words</span><span class="o">.</span><span class="n">include?</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>      <span class="nb">hash</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">=</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>      <span class="n">words</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>同时经过分析，发现只有在遍历s,t中出现重复字母时，才是问题的复杂点。不适用Set，用两个Hash表也可以解决</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='Ruby'><span class='line'><span class="k">def</span> <span class="nf">is_isomorphic</span><span class="p">(</span><span class="n">s</span><span class="p">,</span><span class="n">t</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">length</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">size</span>
+</span><span class='line'>  <span class="n">hash_s</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">hash_t</span> <span class="o">=</span> <span class="no">Hash</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="mi">0</span><span class="o">.</span><span class="n">upto</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">idx</span><span class="o">|</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">hash_s</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span> <span class="ow">or</span> <span class="n">hash_t</span><span class="o">.</span><span class="n">has_key?</span><span class="p">(</span><span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kp">false</span> <span class="k">if</span> <span class="n">hash_s</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">!=</span> <span class="n">hash_t</span><span class="o">[</span><span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="n">hash_s</span><span class="o">[</span><span class="n">s</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">=</span> <span class="n">idx</span>
+</span><span class='line'>      <span class="n">hash_t</span><span class="o">[</span><span class="n">t</span><span class="o">[</span><span class="n">idx</span><span class="o">]]</span> <span class="o">=</span> <span class="n">idx</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="k">return</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Nvm Usage]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/05/05/nvm-usage/"/>
+    <updated>2015-05-05T21:40:27+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/05/05/nvm-usage</id>
+    <content type="html"><![CDATA[<p>nvm(Node Version Manager)功能等同于Ruby中的rbenv和RVM</p>
+
+<h3>安装NodeJS</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>nvm ls-remote   #列出可以安装的版本
+</span><span class='line'>nvm install 0.11.14 #此处安装0.11.14版本
+</span><span class='line'>nvm ls   #显示已经安装的版本，此处为0.11.14</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>设置使用的NodeJS的版本</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>nvm use version-number # Typed in a new shell
+</span><span class='line'>nvm alias default version-number  #available in any shell</span></code></pre></td></tr></table></div></figure>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reverse Integer]]></title>

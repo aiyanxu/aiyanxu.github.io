@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Nodejs | be a better man]]></title>
+  <link href="http://aiyanxu.github.io/blog/categories/nodejs/atom.xml" rel="self"/>
+  <link href="http://aiyanxu.github.io/"/>
+  <updated>2015-05-25T15:16:24+08:00</updated>
+  <id>http://aiyanxu.github.io/</id>
+  <author>
+    <name><![CDATA[Aiyanxu]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Nvm Usage]]></title>
+    <link href="http://aiyanxu.github.io/blog/2015/05/05/nvm-usage/"/>
+    <updated>2015-05-05T21:40:27+08:00</updated>
+    <id>http://aiyanxu.github.io/blog/2015/05/05/nvm-usage</id>
+    <content type="html"><![CDATA[<p>nvm(Node Version Manager)功能等同于Ruby中的rbenv和RVM</p>
+
+<h3>安装NodeJS</h3>
+
+<pre><code>nvm ls-remote   #列出可以安装的版本
+nvm install 0.11.14 #此处安装0.11.14版本
+nvm ls   #显示已经安装的版本，此处为0.11.14
+</code></pre>
+
+<h3>设置使用的NodeJS的版本</h3>
+
+<pre><code>nvm use version-number # Typed in a new shell
+nvm alias default version-number  #available in any shell
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>
